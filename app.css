@@ -15,18 +15,28 @@ ol, ul {
   background: #ddd;
 }
 
-masteroff {
-	visibility: hidden;
+.master.off {
+	display: none;
 }
 
-masteron {
-	visibility: visible;
+.master.on {
+	display: block;
 }
 
-editingoff {
-	visibility: visible;
+text.editing.off {
+	display: block;
+}
+name.editing.off {
+	display: block;
+}
+btn.editing.off {
+	display: inline;
 }
 
-editingon {
-	visibility: hidden;
+.editing.on {
+	display: none;
+}
+
+.title {
+	width: 600px;
 }

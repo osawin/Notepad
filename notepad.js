@@ -22,10 +22,16 @@ class TextBox extends React.Component {
 		return e('form',
 			{
 				method: "POST",
+				className: this.props.className,
 			},
-			this.props.title,
+			e ('div',
+				{
+					className: 'title',
+				},
+				this.props.title,
+			),
 			e('textarea',
-				{value: this.state.value, onChange: () => this.handleChange(event)}
+				{value: this.state.value, onChange: () => this.handleChange(event), rows: this.props.rows}
 			)
 		);
 	}
@@ -66,6 +72,8 @@ class Master extends React.Component {
 		var list = this.state.notes;
 		list.push({name: "Untitled", text: ""});
 		var index = list.length-1;
+		this.changeName.newNote("Untitled");
+		this.changeText.newNote("");
 		this.setState({mode: "editing", notes: list, place: index, newName: "Untitled", newText: ""});
 	}
 	
@@ -81,7 +89,7 @@ class Master extends React.Component {
 		var list = this.state.notes;
 		list[this.state.place].name = this.state.newName;
 		list[this.state.place].text = this.state.newText;
-		this.setState({mode:"master", notes:list})
+		this.setState({mode:"master", notes:list});
 	}
 	
 	remove () {
@@ -143,6 +151,7 @@ class Master extends React.Component {
 	   			className: "name " + this.state.mode+" off",
 	   			update: this.updateName,
 	   			ref: changeName => {this.changeName = changeName},
+	   			rows: 1,
 			},
 	   	);
 	}
@@ -156,6 +165,7 @@ class Master extends React.Component {
 	   			className: "text " + this.state.mode+" off",
 	   			update: this.updateText,
 	   			ref: changeText => {this.changeText = changeText},
+	   			rows: 30,
 			},
 	   	);
 	}
