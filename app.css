@@ -3,18 +3,9 @@ body {
   margin: 20px;
 }
 
-ol, ul {
-  padding-left: 30px;
-}
-
-.status {
-  margin-bottom: 2px;
-}
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
-
+/*these classes control which mode is visible
+   master/editing are which mode the app is in
+   off/on are which type of control this element is visible in*/
 .master.off {
 	display: none;
 }
@@ -37,6 +28,7 @@ btn.editing.off {
 	display: none;
 }
 
+/*sets the width of the labels of the text boxes*/
 .title {
 	width: 600px;
 }

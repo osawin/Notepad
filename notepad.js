@@ -1,6 +1,8 @@
 const e = React.createElement;
 
 class TextBox extends React.Component {
+	//this component is the text boxes
+	//   where the name and content of the notes are entered
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -9,12 +11,14 @@ class TextBox extends React.Component {
 	}
 
   	handleChange(event) {
+  		//handles the user writing something
     	this.setState({value: event.target.value});
     	this.props.update(event.target.value);
   	}
   	
-  	newNote(data)
+  	edit(data)
   	{
+  		//how the master changes the data in this when a new note is loaded
   		this.setState({value: data});
   	}
   	  
@@ -38,6 +42,7 @@ class TextBox extends React.Component {
 }
 
 class Btn extends React.Component {
+	//all of the buttons.
 	render() {
 		return e(
       		'button',
@@ -50,7 +55,7 @@ class Btn extends React.Component {
 	}	
 }
 
-class Master extends React.Component {
+class Notepad extends React.Component {
 
 	constructor(props)
 	{
@@ -58,34 +63,41 @@ class Master extends React.Component {
 		var list = Array(0).fill(null);
 		list.push({name: "Untitled", text: ""});
 		this.state = {
-			notes: list,
-			mode: "master",
-			place: 0,
-			newName: "Untitled",
-			newText: "",
+			notes: list,        //the list of notes
+			mode: "master",     //'master' when looking over the list of notes, 'editing' when editing a specific note. Swapping sets the display css property to hide the unused elements
+			place: 0,           //the note currently being edited
+			newName: "Untitled",//the current name in the name text box
+			newText: "",        //the current text in the content text box
 		}
 		this.updateName = this.updateName.bind(this);
 		this.updateText = this.updateText.bind(this);
 	}
 	
 	create () {
+		//callback when a new note is made
+		//adds a new note to the list, and set up the view to begin editing
 		var list = this.state.notes;
 		list.push({name: "Untitled", text: ""});
 		var index = list.length-1;
-		this.changeName.newNote("Untitled");
-		this.changeText.newNote("");
+		this.nameBox.edit("Untitled");
+		this.textBox.edit("");
 		this.setState({mode: "editing", notes: list, place: index, newName: "Untitled", newText: ""});
 	}
 	
 	updateName (name) {
+		//called by the name textbox when something is changed
 		this.setState({newName: name});
 	}
 	
 	updateText (text) {
+		//called by the content textbox when something is changed
 		this.setState({newText: text})
 	}
 	
 	save () {
+		//called by the save button
+		//uses the newName and newText value to change the permanent value of the note being edited
+		//returns the user to looking at the list
 		var list = this.state.notes;
 		list[this.state.place].name = this.state.newName;
 		list[this.state.place].text = this.state.newText;
@@ -93,14 +105,19 @@ class Master extends React.Component {
 	}
 	
 	remove () {
-	 var list = this.state.notes;
-	 var removed = list.splice(this.state.place,1);
-	 this.setState({mode:"master", notes:list});
+		//called by the delete button
+		//removes the current note from the list of notes
+		//returns the user to looking at the list
+		var list = this.state.notes;
+		var removed = list.splice(this.state.place,1);
+		this.setState({mode:"master", notes:list});
 	}
 	
 	edit (index) {
-		this.changeName.newNote(this.state.notes[index].name);
-		this.changeText.newNote(this.state.notes[index].text);
+		//called by clicking on a note
+		//sets up the textboxes and sets user in editing mode
+		this.nameBox.edit(this.state.notes[index].name);
+		this.textBox.edit(this.state.notes[index].text);
 		this.setState({
 			mode:"editing",
 			place:index,
@@ -111,6 +128,7 @@ class Master extends React.Component {
 	
 	renderNew()
 	{
+		//creates the create new note button
 		return e(Btn,
 			{
        			value: "new Note", 
@@ -122,6 +140,7 @@ class Master extends React.Component {
 	
 	renderSave()
 	{
+		//creates the save button
 		return e(Btn,
 			{
        			value: "Save",
@@ -133,6 +152,7 @@ class Master extends React.Component {
 	
 	renderRemove()
 	{
+		//creates the delete button
 		return e(Btn,
 			{
        			value: "Delete",
@@ -144,13 +164,14 @@ class Master extends React.Component {
 	
 	renderName()
 	{
+		//creates the name textbox
 		return e(TextBox,
 			{
        			value: this.state.newName,
     			title: "Name",
 	   			className: "name " + this.state.mode+" off",
 	   			update: this.updateName,
-	   			ref: changeName => {this.changeName = changeName},
+	   			ref: nameBox => {this.nameBox = nameBox},
 	   			rows: 1,
 			},
 	   	);
@@ -158,13 +179,14 @@ class Master extends React.Component {
 	
 	renderText()
 	{
+		//creates the content textbox
 		return e(TextBox,
 			{
        			value: this.state.newText,
        			title: "Text",
 	   			className: "text " + this.state.mode+" off",
 	   			update: this.updateText,
-	   			ref: changeText => {this.changeText = changeText},
+	   			ref: textBox => {this.textBox = textBox},
 	   			rows: 30,
 			},
 	   	);
@@ -173,14 +195,14 @@ class Master extends React.Component {
 	render () {
 		return e('div',
 			{},
-			e('div',
+			e('div', //this div holds the editing note mode
 				{},
 				this.renderSave(),
 				this.renderRemove(),
 				this.renderName(),
 				this.renderText(),
 			),
-			e('div',
+			e('div', //this div holds the list of notes mode
 				{},
 				this.renderNew(),
 				e('div',
@@ -189,7 +211,7 @@ class Master extends React.Component {
 					},
 					"Existing Notes",
 				),
-				this.state.notes.map((item,index) => 
+				this.state.notes.map((item,index) => //this creates a list of buttons, one for each note
 					e(
 						Btn,
 						{
@@ -207,4 +229,4 @@ class Master extends React.Component {
 
 
 const domContainer = document.querySelector('#root');
-ReactDOM.render(e(Master), domContainer);
+ReactDOM.render(e(Notepad), domContainer);
