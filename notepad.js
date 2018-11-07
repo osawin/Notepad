@@ -60,14 +60,12 @@ class Notepad extends React.Component {
 	constructor(props)
 	{
 		super(props);
-		var list = Array(0).fill(null);
-		list.push({name: "Untitled", text: ""});
 		this.state = {
-			notes: list,        //the list of notes
-			mode: "master",     //'master' when looking over the list of notes, 'editing' when editing a specific note. Swapping sets the display css property to hide the unused elements
-			place: 0,           //the note currently being edited
-			newName: "Untitled",//the current name in the name text box
-			newText: "",        //the current text in the content text box
+			notes: Array(0).fill(null),	//the list of notes
+			mode: "master",				//'master' when looking over the list of notes, 'editing' when editing a specific note. Swapping sets the display css property to hide the unused elements
+			place: 0,					//the note currently being edited
+			newName: "",		//the current name in the name text box
+			newText: "",				//the current text in the content text box
 		}
 		var storage = localStorage.getItem('oliversawin.notepad.notes');
 		if (storage)
