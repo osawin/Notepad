@@ -1,0 +1,32 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.status {
+  margin-bottom: 2px;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+masteroff {
+	visibility: hidden;
+}
+
+masteron {
+	visibility: visible;
+}
+
+editingoff {
+	visibility: visible;
+}
+
+editingon {
+	visibility: hidden;
+}
