@@ -35,7 +35,7 @@ class TextBox extends React.Component {
 				this.props.title,
 			),
 			e('textarea',
-				{value: this.state.value, onChange: () => this.handleChange(event), rows: this.props.rows}
+				{value: this.state.value, onChange: (event) => this.handleChange(event), rows: this.props.rows}
 			)
 		);
 	}
@@ -68,6 +68,12 @@ class Notepad extends React.Component {
 			place: 0,           //the note currently being edited
 			newName: "Untitled",//the current name in the name text box
 			newText: "",        //the current text in the content text box
+		}
+		var storage = localStorage.getItem('oliversawin.notepad.notes');
+		if (storage)
+		{
+			storage = JSON.parse(storage);
+			this.state.notes = storage;
 		}
 		this.updateName = this.updateName.bind(this);
 		this.updateText = this.updateText.bind(this);
@@ -102,6 +108,7 @@ class Notepad extends React.Component {
 		list[this.state.place].name = this.state.newName;
 		list[this.state.place].text = this.state.newText;
 		this.setState({mode:"master", notes:list});
+		localStorage.setItem('oliversawin.notepad.notes', JSON.stringify(this.state.notes));
 	}
 	
 	remove () {
