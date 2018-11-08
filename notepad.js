@@ -116,6 +116,7 @@ class Notepad extends React.Component {
 		var list = this.state.notes;
 		var removed = list.splice(this.state.place,1);
 		this.setState({mode:"master", notes:list});
+		localStorage.setItem('oliversawin.notepad.notes', JSON.stringify(this.state.notes));
 	}
 	
 	edit (index) {
