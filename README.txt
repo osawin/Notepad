@@ -10,3 +10,8 @@ Saving or deleting a note takes one to the editing page.
 Notes are stored in local browser history.
 The list of notes is saved whenever a note is created, deleted or saved.
 When the application is opened, it reads the browser history to determine what notes to show.
+
+How to Run:
+Download the files in the Github GUI, or by checking out the repository.
+Open index.html in a browser. The use of localStorage leads to errors in Safari on a Mac, it runs successfully in Firefox and Chrome on a Mac. It has not been tested on Windows.
+Begin creating and editing notes.
