@@ -86,6 +86,7 @@ class Notepad extends React.Component {
 		this.nameBox.edit("Untitled");
 		this.textBox.edit("");
 		this.setState({mode: "editing", notes: list, place: index, newName: "Untitled", newText: ""});
+		localStorage.setItem('oliversawin.notepad.notes', JSON.stringify(this.state.notes));
 	}
 	
 	updateName (name) {
@@ -213,7 +214,7 @@ class Notepad extends React.Component {
 				this.renderNew(),
 				e('div',
 					{
-						className: this.state.mode+" on",
+						className: "title " + this.state.mode+" on",
 					},
 					"Existing Notes",
 				),

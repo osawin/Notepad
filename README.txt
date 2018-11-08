@@ -6,4 +6,7 @@ Creating a new note, or clicking on one of the existing notes, takes one to the 
 
 In the editing node, one sees 2 buttons, delete and save, as well as two text boxes with the name and content of the note.
 Saving or deleting a note takes one to the editing page.
-Saving a note saves it to local browser storage. Loading the page again keeps the same list of notes.
+
+Notes are stored in local browser history.
+The list of notes is saved whenever a note is created, deleted or saved.
+When the application is opened, it reads the browser history to determine what notes to show.
